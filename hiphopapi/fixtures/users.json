@@ -1,0 +1,26 @@
+[
+  {
+    "model": "hiphopapi.user",
+    "pk": 1,
+    "fields": {
+      "uid": 1,
+      "name": "Nick Stick"
+    }
+  },
+  {
+    "model": "hiphopapi.user",
+    "pk": 2,
+    "fields": {
+      "uid": 2,
+      "name": "Karen Smith"
+    }
+  },
+  {
+    "model": "hiphopapi.user",
+    "pk": 3,
+    "fields": {
+      "uid": 3,
+      "name": "Kevin Tims"
+    }
+  }
+]
