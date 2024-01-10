@@ -1,0 +1,29 @@
+[
+  {
+    "model": "hiphopapi.orderitem",
+    "pk": 1,
+    "fields": {
+      "order": 1,
+      "item": 2,
+      "quantity": 2
+    }
+  },
+  {
+    "model": "hiphopapi.orderitem",
+    "pk": 2,
+    "fields": {
+      "order": 2,
+      "item": 1,
+      "quantity": 5
+    }
+  },
+  {
+    "model": "hiphopapi.orderitem",
+    "pk": 3,
+    "fields": {
+      "order": 3,
+      "item": 3,
+      "quantity": 3
+    }
+  }
+]

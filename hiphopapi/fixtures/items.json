@@ -1,0 +1,26 @@
+[
+  {
+    "model": "hiphopapi.item",
+    "pk": 1,
+    "fields": {
+      "name": "Margherita",
+      "price": 21.90
+    }
+  },
+  {
+    "model": "hiphopapi.item",
+    "pk": 2,
+    "fields": {
+      "name": "Meatlovers",
+      "price": 25.70
+    }
+  },
+  {
+    "model": "hiphopapi.item",
+    "pk": 3,
+    "fields": {
+      "name": "Pinapple",
+      "price": 15.23
+    }
+  }
+]
