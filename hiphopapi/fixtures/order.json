@@ -3,6 +3,9 @@
     "model": "hiphopapi.order",
     "pk": 1,
     "fields": {
+      "name": "Jan Smith",
+      "email": "jsmith@example.com",
+      "phone_number": 1234567891,
       "timestamp": "2024-01-08T12:30:00",
       "payment_type": "Credit",
       "order_type": "Call-in",
@@ -17,6 +20,9 @@
     "model": "hiphopapi.order",
     "pk": 2,
     "fields": {
+      "name": "John Doe",
+      "email": "john@example.com",
+      "phone_number": 1234567890,
       "timestamp": "2024-01-09T08:15:00",
       "payment_type": "Mobile",
       "order_type": "Call-in",
@@ -31,6 +37,9 @@
     "model": "hiphopapi.order",
     "pk": 3,
     "fields": {
+      "name": "Bob Johnson",
+      "email": "bjohnson@example.com",
+      "phone_number": 1234567889,
       "timestamp": "2024-01-09T08:15:00",
       "payment_type": "Mobile",
       "order_type": "Call-in",

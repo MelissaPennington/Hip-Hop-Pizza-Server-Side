@@ -2,67 +2,76 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from hiphop.models import orders, users, customer
+from rest_framework.decorators import action
+from hiphopapi.models import Order, User, Item, OrderItem
 
 class OrderView(ViewSet):
+
     def retrieve(self, request, pk):
-        try:
-            order_instance = Order.objects.get(pk=pk)
-            serializer = OrderSerializer(order_instance)
-            return Response(serializer.data)
-        except Order.DoesNotExist as ex:
-            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
-    
+        order = Order.objects.get(pk=pk)
+        serializer = OrderSerializer(order)
+        return Response(serializer.data)
+
     def list(self, request):
         orders = Order.objects.all()
         serializer = OrderSerializer(orders, many=True)
         return Response(serializer.data)
-        
+
     def create(self, request):
-        cashier = User.objects.get(uid=request.data["uid"])
-        customer = Customer.objects.get(pk=request.data["customerId"])
+        user_instance = User.objects.get(uid=request.data["user"])
         order = Order.objects.create(
-            cashier=cashier,
-            customer=customer,
-            open_time=request.data["openTime"],
-            close_time=request.data["closeTime"],
-            open=request.data["open"],
-            type=request.data["type"],
-            payment_type=request.data["paymentType"],
-            tip_amount=request.data["tipAmount"],
-            total=request.data["total"]
+            user=user_instance,
+            customer=request.data["customer"],
+            is_open=request.data["is_open"],
+            timestamp=request.data["timestamp"],
+            payment_type=request.data["payment_type"],
+            tip_amount=request.data["tip_amount"],
+            total=request.data["total"],
+            order_type=request.data["order_type"]
         )
-        serializer = OrderSerializerShallow(order)
+        serializer = OrderSerializer(order)
         return Response(serializer.data)
 
     def update(self, request, pk):
-        cashier = User.objects.get(uid=request.data["uid"])
-        customer = Customer.objects.get(pk=request.data["customerId"])
         order = Order.objects.get(pk=pk)
-        order.cashier = cashier
-        order.customer = customer
-        order.open_time = request.data["openTime"]
-        order.close_time = request.data["closeTime"]
-        order.open = request.data["open"]
-        order.type = request.data["type"]
-        order.payment_type = request.data["paymentType"]
-        order.tip_amount = request.data["tipAmount"]
+        order.name = request.data["name"]
+        order.email = request.data["email"]
+        order.phone_number = request.data["phone_number"]
+        order.timestamp = request.data["timestamp"]
+        order.payment_type = request.data["payment_type"]
+        order.tip_amount = request.data["tip_amount"]
         order.total = request.data["total"]
+        order.order_type = request.data["order_type"]
+        order.is_open = request.data["is_open"]
         order.save()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
-    
+
     def destroy(self, request, pk):
         order = Order.objects.get(pk=pk)
         order.delete()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
 
-class OrderSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Order
-        fields = ('id', 'cashier', 'customer', 'open_time', 'close_time', 'open', 'type', 'payment_type', 'tip_amount', 'total')
-        depth = 1
+    # ADD/REMOVE ORDERITEM
 
-class OrderSerializerShallow(serializers.ModelSerializer):
+    @action(methods=['post'], detail=True)
+    def add_order_item(self, request, pk):
+        item = Item.objects.get(pk=request.data["item"])
+        order = Order.objects.get(pk=pk)
+        order_item = OrderItem.objects.create(
+            item=item,
+            order=order,
+            quantity=request.data["quantity"]
+        )
+        return Response({'message': 'Item added to order'}, status=status.HTTP_201_CREATED)
+
+    @action(methods=['delete'], detail=True)
+    def remove_order_item(self, request, pk):
+        order_item_id = request.data.get("order_item")
+        OrderItem.objects.filter(pk=order_item_id, order__pk=pk).delete()
+        return Response("Order item removed", status=status.HTTP_204_NO_CONTENT)
+
+class OrderSerializer(serializers.ModelSerializer):
+    """JSON serializer for orders"""
     class Meta:
         model = Order
-        fields = ('id', 'cashier_id', 'customer_id', 'open_time', 'close_time', 'open', 'type', 'payment_type', 'tip_amount', 'total')
+        fields = ('id', 'user', 'name', 'phone_number', 'email', 'is_open', 'timestamp', 'payment_type', 'order_type', 'total', 'is_open')
