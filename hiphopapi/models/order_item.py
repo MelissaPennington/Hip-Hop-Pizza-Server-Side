@@ -1,6 +1,6 @@
 from django.db import models
-from .orders import Order
-from .items import Item
+from .order import Order
+from .item import Item
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
