@@ -1,14 +1,26 @@
 [
   {
-    "model": "hhpnwapi.revenue",
+    "model": "hiphopapi.revenue",
     "pk": 1,
     "fields": {
-      "order": 2,
-      "date": "2024-01-08T12:28:33",
+      "order": 1,
+      "date": "2024-01-12 18:28:33",
+      "payment": "credit",
+      "subtotal": "34.95",
+      "tip": "7.00",
+      "total": "41.95"
+    }
+  },
+  {
+    "model": "hiphopapi.revenue",
+    "pk": 2,
+    "fields": {
+      "order": 1,
+      "date": "2024-01-12 15:28:33",
       "payment": "cash",
-      "subtotal": "12.99",
-      "tip": "4.00",
-      "total": "16.99"
+      "subtotal": "22.50",
+      "tip": "5.00",
+      "total": "27.50"
     }
   }
 ]

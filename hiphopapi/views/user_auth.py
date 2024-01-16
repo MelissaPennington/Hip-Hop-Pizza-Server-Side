@@ -1,11 +1,12 @@
 from rest_framework.decorators import api_view
+from django.http import HttpResponseServerError
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from hiphopapi.models import User
 
-
 @api_view(['POST'])
 def check_user(request):
-    '''Checks to see if User has Associated User
+    '''Checks to see if User has Associated User Account
 
     Method arguments:
       request -- The full HTTP request object
@@ -20,8 +21,8 @@ def check_user(request):
     if user is not None:
         data = {
             'id': user.id,
-            'uid': user.uid,
-            'name': user.name
+            'username': user.username,
+            'uid': user.uid
         }
         return Response(data)
     else:
@@ -32,22 +33,21 @@ def check_user(request):
 
 @api_view(['POST'])
 def register_user(request):
-    '''Handles the creation of a new gamer for authentication
+    '''Handles the creation of a new user for authentication
 
     Method arguments:
       request -- The full HTTP request object
     '''
 
-    # Now save the user info in the levelupapi_gamer table
     user = User.objects.create(
-        name=request.data["name"],
+        username=request.data["username"],
         uid=request.data["uid"]
     )
 
-    # Return the gamer info to the client
+    # Return the user info to the client
     data = {
         'id': user.id,
-        'name': user.name,
+        'username': user.username,
         'uid': user.uid
     }
     return Response(data)
