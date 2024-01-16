@@ -1,4 +1,3 @@
-"""View module for handling requests about items"""
 from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
@@ -7,15 +6,20 @@ from hiphopapi.models import OrderItem, Order, Item
 
 
 class OrderItemView(ViewSet):
-    """hhpnw order item view"""
+    """order item view"""
 
     def retrieve(self, request, pk):
         """Handle GET requests for single order item.
         Returns: Response -- JSON serialized order item"""
 
-        order_item = OrderItem.objects.get(pk=pk)
-        serializer = OrderItemSerializer(order_item)
-        return Response(serializer.data)
+        try:
+            order_item = OrderItem.objects.get(pk=pk)
+            serializer = OrderItemSerializer(order_item)
+            return Response(serializer.data)
+        except OrderItem.DoesNotExist:
+            return Response({'message': 'OrderItem not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'message': f'An error occurred: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
     def list(self, request):
@@ -24,26 +28,14 @@ class OrderItemView(ViewSet):
         order_items = OrderItem.objects.all()
         serializer = OrderItemSerializer(order_items, many=True)
         return Response(serializer.data)
-      
-    
-    # def create(self, request):
-    #     """Handle POST operations
-    #     Returns Response -- JSON serialized order instance"""
-    #     order = Order.objects.get(pk=pk)
-    #     item = Item.objects.get(pk=pk)
-
-    #     order_item = Order.objects.create(
-    #         order = order,
-    #         item = item,
-    #     )
-    #     serializer = OrderItemSerializer(order_item)
-    #     return Response(serializer.data)
-
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
     """JSON serializer for order items"""
+    name = serializers.CharField(source='item.name', read_only=True)
+    price = serializers.DecimalField(source='item.price', read_only=True, max_digits=7, decimal_places=2)
+
     class Meta:
         model = OrderItem
-        fields = ('id', 'order', 'item')
+        fields = ('id', 'name', 'price')
         depth = 1

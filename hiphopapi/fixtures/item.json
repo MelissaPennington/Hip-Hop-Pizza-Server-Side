@@ -3,24 +3,24 @@
     "model": "hiphopapi.item",
     "pk": 1,
     "fields": {
-      "name": "Margherita",
-      "price": 21.90
+      "name": "Cheese Pizza",
+      "price": 10.99
     }
   },
   {
     "model": "hiphopapi.item",
     "pk": 2,
     "fields": {
-      "name": "Meatlovers",
-      "price": 25.70
+      "name": "Cheese Stix",
+      "price": 5.99
     }
   },
   {
     "model": "hiphopapi.item",
     "pk": 3,
     "fields": {
-      "name": "Pinapple",
-      "price": 15.23
+      "name": "Calzone",
+      "price": 7.49
     }
   }
 ]

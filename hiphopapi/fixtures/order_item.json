@@ -4,8 +4,7 @@
     "pk": 1,
     "fields": {
       "order": 1,
-      "item": 2,
-      "quantity": 2
+      "item": 1
     }
   },
   {
@@ -13,8 +12,7 @@
     "pk": 2,
     "fields": {
       "order": 2,
-      "item": 1,
-      "quantity": 5
+      "item": 2
     }
   },
   {
@@ -22,8 +20,7 @@
     "pk": 3,
     "fields": {
       "order": 3,
-      "item": 3,
-      "quantity": 3
+      "item": 3
     }
   }
 ]
