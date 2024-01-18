@@ -39,3 +39,18 @@ class RevenueSerializer(serializers.ModelSerializer):
         model = Revenue
         fields = ('id', 'order', 'date', 'payment', 'subtotal', 'tip', 'total')
         depth = 1
+
+    def validate_date(self, value):
+        """Validate the date field to ensure it's in the correct format"""
+        try:
+            # Try parsing the date to check if it's in the correct format
+            value = serializers.DateTimeField().to_internal_value(value)
+            return value
+        except serializers.ValidationError:
+            raise serializers.ValidationError("Invalid date format. Please provide the date in the format: YYYY-MM-DDTHH:MM:SSZ")
+# class RevenueSerializer(serializers.ModelSerializer):
+#     """JSON serializer for revenue nodes"""
+#     class Meta:
+#         model = Revenue
+#         fields = ('id', 'order', 'date', 'payment', 'subtotal', 'tip', 'total')
+#         depth = 1

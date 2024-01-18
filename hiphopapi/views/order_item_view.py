@@ -1,3 +1,4 @@
+
 from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
@@ -15,7 +16,8 @@ class OrderItemView(ViewSet):
         try:
             order_item = OrderItem.objects.get(pk=pk)
             serializer = OrderItemSerializer(order_item)
-            return Response(serializer.data)
+            # return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         except OrderItem.DoesNotExist:
             return Response({'message': 'OrderItem not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
