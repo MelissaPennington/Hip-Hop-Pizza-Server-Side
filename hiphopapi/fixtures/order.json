@@ -15,7 +15,7 @@
     "model": "hiphopapi.order",
     "pk": 2,
     "fields": {
-      "user": 2,
+      "user": 1,
       "name": "Sample Order 2",
       "phone": "987-654-3210",
       "email": "another@example.com",
@@ -27,7 +27,7 @@
     "model": "hiphopapi.order",
     "pk": 3,
     "fields": {
-      "user": 3,
+      "user": 1,
       "name": "Sample Order 3",
       "phone": "987-654-3210",
       "email": "another@example.com",
